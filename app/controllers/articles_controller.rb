@@ -1,4 +1,7 @@
 class ArticlesController < ApplicationController
+
+  http_basic_authenticate_with name: "omer", password: "hodo", except: [:index, :show]
+
   def index
     @articles=Article.all
   end
@@ -12,7 +15,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article=Article.new(title:"...", body:"...")
+    @article=Article.new(article_params)
 
     if @article.save
       redirect_to @article
@@ -40,7 +43,7 @@ class ArticlesController < ApplicationController
 
   private ##izin verdiğimiz nesneleri burda belirtiyoruz.
     def article_params
-      params.require(:article).permit(:title, :body)
+      params.require(:article).permit(:title, :body, :status)
     end
 
 end
